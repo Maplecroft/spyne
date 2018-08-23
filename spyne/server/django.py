@@ -81,8 +81,13 @@ class DjangoApplication(WsgiApplication):
         # would hang waiting for extra request data. Use DjangoServer instead
         # of monkeypatching wsgi.inpu.
 
-        #environ['wsgi.input'] = request
-        #environ['wsgi.multithread'] = False
+        # NDJB (MAPLECROFT) We have forked and uncommented these lines because
+        # it won't work with our production enviroment without it. Not entirely
+        # sure why this is required, but it is necessary. Feel free to add a
+        # comment here if you know why this is required.
+
+        environ['wsgi.input'] = request
+        environ['wsgi.multithread'] = False
 
         response = WsgiApplication.__call__(self, environ, start_response)
         self.set_response(retval, response)
